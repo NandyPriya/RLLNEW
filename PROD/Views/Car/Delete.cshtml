@@ -1,0 +1,123 @@
+﻿@model PROD.Models.CAR
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to remove this car?</h3>
+@*<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Carid)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Carid)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Carname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Carname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CarType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CarType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PerDayCharge)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PerDayCharge)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ChargePerKm)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ChargePerKm)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Available)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Available)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Remove" class="btn btn-danger" /> |
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-large" })
+            </div>
+        }
+    </div>*@
+<table class="table table-responsive table-striped">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Carid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Carname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PerDayCharge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChargePerKm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Available)
+        </th>
+
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Carid)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Carname)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.CarType)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.PerDayCharge)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.ChargePerKm)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Available)
+        </td>
+
+    </tr>
+
+
+</table>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", null, new { id = Model.Carid }, new { @class = "btn btn-primary btn-large" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-large" })
+</p>

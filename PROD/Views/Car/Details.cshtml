@@ -1,0 +1,62 @@
+﻿@model PROD.Models.CAR
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+<table class="table table-responsive table-striped">
+    
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Carid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerDayCharge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChargePerKm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Available)
+            </th>
+
+        </tr>
+
+        <tr >
+            <td>
+                @Html.DisplayFor(model => model.Carid)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Carname)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CarType)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PerDayCharge)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ChargePerKm)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Available)
+            </td>
+
+        </tr>
+
+
+</table>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", null, new { id = Model.Carid }, new { @class = "btn btn-primary btn-large" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-large" })
+</p>
