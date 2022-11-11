@@ -27,28 +27,32 @@ namespace PROD.Controllers
         public ActionResult Register()
         {
             CustModel customer = new CustModel();
+            Random k = new Random();
+            customer.Customerid = k.Next(1000, 40000);
             customer.LoyaltyPoints = 0;
             return View(customer);
         }
         [HttpPost]
         public ActionResult Register(FormCollection c)
         {
-            Customer c1 = new Customer();
-            c1.LoyaltyPoints =Convert.ToInt32(c["LoyaltyPoints"]);
-            c1.Customerid = Convert.ToInt32(c["Customerid"]);
-            c1.CustomerName = c["CustomerName"].ToString();
-            c1.mail = c["Email"].ToString();
-            c1.Password = c["Password"].ToString();
-            bool k=cd.AddCustomer(c1);
-            if (k)
-            {
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                return View();
-            }
-
+            
+                Customer c1 = new Customer();
+                c1.LoyaltyPoints = Convert.ToInt32(c["LoyaltyPoints"]);
+                c1.Customerid = Convert.ToInt32(c["Customerid"]);
+                c1.CustomerName = c["CustomerName"].ToString();
+                c1.mail = c["Email"].ToString();
+                c1.Password = c["Password"].ToString();
+                bool k = cd.AddCustomer(c1);
+                if (k)
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    return View();
+                }
+            
+           
 
         }
         public ActionResult Login()
@@ -82,7 +86,36 @@ namespace PROD.Controllers
 
 
         }
+       public ActionResult forgotpassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult forgotpassword(FormCollection c)
+        {
+            string k = c["Email"].ToString();
+            string p = c["Password"].ToString();
+            Customer c1 = null;
+            foreach(var item in cd.GetCustomers())
+            {
+                if (k == item.mail)
+                {
+                    c1 = item;
+                }
 
+            }
+            c1.Password = p;
+            bool k1 = cd.updatecustomer(c1.Customerid, c1);
+            if (k1)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return View();
+            }
+
+        }
       
         // GET: Customer
         public ActionResult Index()
@@ -120,8 +153,13 @@ namespace PROD.Controllers
         // GET: Customer/Details/5
         public ActionResult Details()
         {
-            Customer k = (Customer)TempData["User"];
-            TempData["User"] = k;
+            
+           
+            Customer g = (Customer)TempData["User"];
+            TempData["User"]=g; 
+            int id = g.Customerid;
+            Customer k = cd.GetCustomer(id);
+            
             CustModel k1 = new CustModel();
             k1.Customerid = k.Customerid;
             k1.CustomerName = k.CustomerName;
@@ -173,6 +211,9 @@ namespace PROD.Controllers
 
             Customer k=(Customer)TempData["user"];
             CARRENT r = new CARRENT();
+            Random k1 = new Random();
+            r.RentId = k1.Next(1000,40000);
+
             r.CustomerId = k.Customerid;
             r.CarId = id;
             TempData["user"]=k;
@@ -257,7 +298,7 @@ namespace PROD.Controllers
             Customer k =(Customer) TempData["user"];
             int id = k.Customerid;
             TempData["user"] = k;
-            ls = ls.Where(x => (x.ReturnDate < DateTime.Today || x.ReturnOdoReading != null) && x.CustomerId == id).ToList();
+            ls = ls.Where(x => (x.ReturnDate < DateTime.Today || x.ReturnOdoReading!=null)&&x.CustomerId==id).ToList();
             List<CARRENT> list = new List<CARRENT>();
             foreach (var rent in ls)
             {
@@ -378,8 +419,12 @@ namespace PROD.Controllers
         {
             CarRent r=fs.find(id);
             Cost k1 = new Cost();
+            k1.Rentid = id;
             Tuple<int, double> k = fs.charges(r);
             k1.KmsCovered = k.Item1;
+            int id1 = Convert.ToInt32(r.CustomerId);
+            cd.Addloyalty(k1.KmsCovered,id1);
+            
             k1.Price = k.Item2;
             double charge = k.Item2;
             double tax = 0;
@@ -400,7 +445,29 @@ namespace PROD.Controllers
             }
             k1.tax=tax;
             k1.TotalCost = charge;
+            TempData["Cos"] = k1;
             return View(k1);
+        }
+        public ActionResult ApplyDiscount10(int id)
+        {
+            Cost k = (Cost)TempData["Cos"];
+            CarRent m = fs.find(id);
+            int id1 =Convert.ToInt32(m.CustomerId);
+           Customer c=cd.GetCustomer(id1);
+            if (c.LoyaltyPoints >= 25)
+            {
+                k.TotalCost = k.TotalCost - (0.1 * k.TotalCost);
+                cd.minusloyalty(id1);
+                ViewBag.Message5 = "Discount Applied..";
+                return View(k);
+            }
+            else
+            {
+                ViewBag.Message4 = "Your loyalty Points still not reach the level to get discount";
+                return View(k);
+            }
+           
+
         }
         
         public ActionResult Successful()
@@ -443,7 +510,7 @@ namespace PROD.Controllers
                 TempData["Returndate"] = k2;
             }
            List<CarRent> m1 = fs.rentlist();
-            m1 = m1.Where(x => ((k1 <= x.ReturnDate) && (x.RentOrderDate <= k2)) && (x.CustomerId == k.Customerid) && x.ReturnOdoReading==null).ToList();
+            m1 = m1.Where(x => ((k1 <= x.ReturnDate) && (x.RentOrderDate <= k2)) && (x.CustomerId == k.Customerid) && x.ReturnOdoReading is null).ToList();
             if (m1.Count!=0)
             {
                 ViewBag.Message14 = "You have booked another car that day";
@@ -467,7 +534,7 @@ namespace PROD.Controllers
             TempData["Search1"] = s;
 
             List<CarRent> m1 = fs.rentlist();
-            m1 = m1.Where(x => ((k1 <= x.ReturnDate) && (x.RentOrderDate <= k2))&&x.ReturnOdoReading==null).ToList();
+            m1 = m1.Where(x => (k1 <= x.ReturnDate && x.RentOrderDate <= k2)&&x.ReturnOdoReading is null).ToList();
             List<int> m2 = new List<int>();
             foreach (var item in m1)
             {
@@ -476,5 +543,6 @@ namespace PROD.Controllers
             }
             return m2;
         }
+   
     }
 }

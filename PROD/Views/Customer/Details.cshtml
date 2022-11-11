@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PROD.Models.CustModel>
+﻿@model  PROD.Models.CustModel
 
 @{
     ViewBag.Title = "Details";
@@ -9,43 +9,46 @@
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Customerid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomerName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoyaltyPoints)
-        </th>
-      
+    <td>
+        @Html.DisplayNameFor(model => model.Customerid)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Customerid)
+    </td>
     </tr>
-
-
     <tr>
-        <td>
-            @Html.DisplayFor(model => model.Customerid)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.CustomerName)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.LoyaltyPoints)
-        </td>
-       
+    <td>
+        @Html.DisplayNameFor(model => model.CustomerName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.CustomerName)
+    </td>
+    </tr>
+    <tr>
+    <td>
+        @Html.DisplayNameFor(model => model.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Email)
+    </td>
+    </tr>
+    <tr>
+    <td>
+        @Html.DisplayNameFor(model => model.Password)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Password)
+    </td>
+    </tr>
+    <tr>
+    <td>
+        @Html.DisplayNameFor(model => model.LoyaltyPoints)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.LoyaltyPoints)
+    </td>
     </tr>
 
+   
 
 </table>

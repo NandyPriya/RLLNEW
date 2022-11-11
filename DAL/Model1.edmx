@@ -21,7 +21,7 @@
           <Property Name="CarType" Type="nvarchar" MaxLength="40" />
           <Property Name="PerDayCharge" Type="int" />
           <Property Name="ChargePerKm" Type="int" />
-          <Property Name="Available" Type="nvarchar" MaxLength="10" />
+          <Property Name="Available" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="CarRent">
           <Key>
@@ -58,6 +58,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_rentCustomer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CarRent" Type="Self.CarRent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Customerid" />
+            </Principal>
+            <Dependent Role="CarRent">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CarRentalModelStoreContainer">
           <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
@@ -65,6 +77,10 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_rentcar" Association="Self.fk_rentcar">
             <End Role="Car" EntitySet="Car" />
+            <End Role="CarRent" EntitySet="CarRent" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rentCustomer" Association="Self.fk_rentCustomer">
+            <End Role="Customer" EntitySet="Customer" />
             <End Role="CarRent" EntitySet="CarRent" />
           </AssociationSet>
         </EntityContainer>
@@ -89,7 +105,7 @@
           <Property Name="PerDayCharge" Type="Int32" />
           <Property Name="ChargePerKm" Type="Int32" />
           <NavigationProperty Name="CarRents" Relationship="Self.fk_rentcar" FromRole="Car" ToRole="CarRent" />
-          <Property Name="Available" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Available" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="CarRent">
           <Key>
