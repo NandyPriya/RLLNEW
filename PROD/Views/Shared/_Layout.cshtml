@@ -32,6 +32,23 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Admin", "AdminLogin", "Car")</li>
                     <li>@Html.ActionLink("Customer", "Login", "Customer")</li>
+                    
+                    <li margin-left:900px>
+                        @if (Session["u"] != null || Session["u1"] != null)
+                        {
+                           
+
+                            @Html.ActionLink("Logout","preventBack")
+                            <script type="text/javascript">
+                                function preventBack() { window.history.forward(); }
+                                setTimeout("preventBack()", 0);
+                                window.onunload = function () { null };
+                            </script>
+
+                        }
+                    </li>
+                        
+                    
                 </ul>
             </div>
         </div>

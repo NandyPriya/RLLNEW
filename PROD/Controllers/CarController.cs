@@ -53,6 +53,7 @@ namespace PROD.Controllers
                 cd.ChargePerKm = c.ChargePerKm;
                 cd.CarType = c.CarType;
                 cd.Available = c.Available;
+                cd.Photo = c.Photo;
                 cars.Add(cd);
             }
             return View(cars);
@@ -72,6 +73,8 @@ namespace PROD.Controllers
             {
                 if (item.Username == k && item.Password == p)
                 {
+                    Session["u"] =k;
+                    TempData["u2"] = k;
                     k1 = true;
                 }
             }
@@ -97,6 +100,7 @@ namespace PROD.Controllers
             c.ChargePerKm = cd.ChargePerKm;
             c.PerDayCharge = cd.PerDayCharge;
             c.Available = cd.Available; 
+            c.Photo=cd.Photo;
             return View(c);
         }
 
@@ -121,6 +125,7 @@ namespace PROD.Controllers
                 cd.ChargePerKm = c.ChargePerKm;
                 cd.CarType = c.CarType;
                 cd.Available = c.Available;
+                cd.Photo = c.Photo;
                 cdal.addcar(cd);
                 return RedirectToAction("Index");
             }
@@ -141,7 +146,7 @@ namespace PROD.Controllers
             c1.PerDayCharge = c.PerDayCharge;
             c1.CarType = c.CarType;
             c1.Available = c.Available;
-
+            c1.Photo = c.Photo;
             return View(c1);
         }
 
@@ -157,6 +162,7 @@ namespace PROD.Controllers
                 cd.ChargePerKm = c.ChargePerKm;
                 cd.CarType = c.CarType;
                 cd.Available = c.Available;
+                cd.Photo = c.Photo.ToString();
             cdal.update(id, cd);
                 return RedirectToAction("Index");
             }
@@ -177,6 +183,7 @@ namespace PROD.Controllers
             c.ChargePerKm = cd.ChargePerKm;
             c.PerDayCharge = cd.PerDayCharge;
             cd.Available = c.Available;
+            cd.Photo = c.Photo.ToString();
             return View(c);
         }
 
@@ -216,7 +223,14 @@ namespace PROD.Controllers
             return View(list);
 
         }
-      
+        public ActionResult preventBack()
+        {
+            string k = TempData["u2"].ToString();
+            ViewBag.Message= "admin" +" "+k;
+            Session.Abandon();
+            return View();
+        }
+
 
 
     }

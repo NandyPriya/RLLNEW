@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -70,6 +71,7 @@ namespace PROD.Controllers
                if(item.mail==s && item.Password == k)
                 {
                     TempData["User"] = item;
+                    Session["u1"] = item;
                     k1 = true;
                 } 
             }
@@ -144,6 +146,7 @@ namespace PROD.Controllers
                 k.PerDayCharge = item.PerDayCharge;
                 k.ChargePerKm = item.ChargePerKm;
                 k.CarType = item.CarType;
+                k.Photo = item.Photo;
                 cars.Add(k);
             }
                 
@@ -543,6 +546,14 @@ namespace PROD.Controllers
             }
             return m2;
         }
-   
+        public ActionResult preventBack()
+        {
+            Customer k=(Customer)TempData["User"];
+            string p = k.CustomerName;
+            ViewData["status"] =p;
+            Session.Abandon();
+            return View();
+        }
+
     }
 }

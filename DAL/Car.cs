@@ -26,6 +26,7 @@ namespace DAL
         public Nullable<int> PerDayCharge { get; set; }
         public Nullable<int> ChargePerKm { get; set; }
         public string Available { get; set; }
+        public string Photo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CarRent> CarRents { get; set; }

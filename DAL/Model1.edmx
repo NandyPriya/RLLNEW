@@ -22,6 +22,7 @@
           <Property Name="PerDayCharge" Type="int" />
           <Property Name="ChargePerKm" Type="int" />
           <Property Name="Available" Type="nchar" MaxLength="10" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CarRent">
           <Key>
@@ -106,6 +107,7 @@
           <Property Name="ChargePerKm" Type="Int32" />
           <NavigationProperty Name="CarRents" Relationship="Self.fk_rentcar" FromRole="Car" ToRole="CarRent" />
           <Property Name="Available" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CarRent">
           <Key>
@@ -188,6 +190,7 @@
           <EntitySetMapping Name="Cars">
             <EntityTypeMapping TypeName="CarRentalModel.Car">
               <MappingFragment StoreEntitySet="Car">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="Available" ColumnName="Available" />
                 <ScalarProperty Name="Carid" ColumnName="Carid" />
                 <ScalarProperty Name="Carname" ColumnName="Carname" />

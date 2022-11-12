@@ -28,6 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Available)
             </th>
+            
 
         </tr>
 
@@ -55,7 +56,10 @@
 
 
 </table>
+<div style="float:right">
+    <img src="@Url.Content(@Model.Photo)" width="50" height="50">
 
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", null, new { id = Model.Carid }, new { @class = "btn btn-primary btn-large" }) |
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-large" })
